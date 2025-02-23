@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="shortcut icon"
+    href="logo.jpeg"
+    type="image/x-icon"
+  />
+    <title>mustaqbal guide</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function StudentOrientationApp() {
+            const [interests, setInterests] = React.useState("");
+            const [skills, setSkills] = React.useState("");
+            const [recommendations, setRecommendations] = React.useState([]);
+
+            const handleGenerateRecommendations = () => {
+                const data = [
+                    { title: "Ingénieur Logiciel", description: "Idéal pour les passionnés de programmation." },
+                    { title: "Designer UX/UI", description: "Parfait pour ceux qui aiment le design et l'expérience utilisateur." },
+                    { title: "Data Scientist", description: "Un choix judicieux pour ceux qui aiment les mathématiques et l’analyse de données." }
+                ];
+                setRecommendations(data);
+            };
+
+            return (
+                <div className="max-w-lg mx-auto bg-white p-6 shadow-md rounded">
+                    <h1 className="text-2xl font-bold mb-4">Orientation Étudiante</h1>
+                    <input 
+                        type="text" placeholder="Vos centres d’intérêt" 
+                        className="w-full p-2 border mb-2" 
+                        value={interests} onChange={(e) => setInterests(e.target.value)}
+                    />
+                    <input 
+                        type="text" placeholder="Vos compétences" 
+                        className="w-full p-2 border mb-4" 
+                        value={skills} onChange={(e) => setSkills(e.target.value)}
+                    />
+                    <button className="bg-blue-500 text-white p-2 w-full rounded" onClick={handleGenerateRecommendations}>
+                        Obtenir des recommandations
+                    </button>
+                    <div className="mt-6">
+                        {recommendations.map((rec, index) => (
+                            <div key={index} className="p-4 border mb-2">
+                                <h2 className="text-lg font-semibold">{rec.title}</h2>
+                                <p>{rec.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<StudentOrientationApp />);
+    </script>
+
+</body>
+</html>
