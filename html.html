@@ -1,52 +1,172 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-    rel="shortcut icon"
-    href="logo.jpeg"
-    type="image/x-icon"
-  />
+    <link rel="shortcut icon" href="logo.jpeg" type="image/x-icon" />
     <title>mustaqbal guide</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
+
 <body class="bg-gray-100 p-6">
 
     <div id="root"></div>
 
     <script type="text/babel">
         function StudentOrientationApp() {
-            const [interests, setInterests] = React.useState("");
+            const [schoolLevel, setSchoolLevel] = React.useState("");
+            const [favoriteSubjects, setFavoriteSubjects] = React.useState("");
+            const [results, setResults] = React.useState("");
             const [skills, setSkills] = React.useState("");
+            const [interests, setInterests] = React.useState("");
             const [recommendations, setRecommendations] = React.useState([]);
 
             const handleGenerateRecommendations = () => {
+                // Simulating recommendations based on the inputs
                 const data = [
-                    { title: "Ingénieur Logiciel", description: "Idéal pour les passionnés de programmation." },
-                    { title: "Designer UX/UI", description: "Parfait pour ceux qui aiment le design et l'expérience utilisateur." },
-                    { title: "Data Scientist", description: "Un choix judicieux pour ceux qui aiment les mathématiques et l’analyse de données." }
-                ];
+                    {
+                        title: "Génie Informatique",
+                        description: "Formation axée sur le développement logiciel, la gestion des systèmes et la cybersécurité.",
+                        etablissements: "EMI, ENSIAS, INPT, ENSA, FST, UIR, UM6P, UEMF, SUPINFO, 1337, ESI"
+                    },
+                    {
+                        title: "Génie Civil",
+                        description: "Conception, construction et maintenance des infrastructures et bâtiments.",
+                        etablissements: "EMI, ENSA, ENSAM, FST, UEMF, UM6P, ESGB, EHTP"
+                    },
+                    {
+                        title: "Génie Mécanique",
+                        description: "Conception et fabrication de systèmes mécaniques et industriels.",
+                        etablissements: "EMI, ENSAM, ENSA, FST, UEMF, UM6P, EHTP"
+                    },
+                    {
+                        title: "Génie Électrique et Énergies Renouvelables",
+                        description: "Électricité, électronique et énergies durables.",
+                        etablissements: "EMI, ENSA, ENSAM, FST, INPT, UEMF, UM6P, EHTP, ESTP"
+                    },
+                    {
+                        title: "Génie Industriel",
+                        description: "Optimisation des processus et gestion des systèmes industriels.",
+                        etablissements: "EMI, ENSA, ENSAM, ENSMR, UM6P, UEMF, ESITH, ESTP"
+                    },
+                    {
+                        title: "Génie Biomédical",
+                        description: "Application des technologies à la santé et aux dispositifs médicaux.",
+                        etablissements: "EMI, ENSA, FST, UEMF, EST Casablanca, ESGB"
+                    },
+                    {
+                        title: "Intelligence Artificielle et Data Science",
+                        description: "Apprentissage automatique, analyse des données et solutions IA.",
+                        etablissements: "ENSIAS, INPT, UM6P, UEMF, UIR, SUPINFO, 1337, ESI"
+                    },
+                    {
+                        title: "Développement Web et Mobile",
+                        description: "Création et maintenance de sites et applications mobiles.",
+                        etablissements: "ENSIAS, INPT, ENSA, FST, UEMF, 1337, SUPINFO, ESI, ISGA"
+                    },
+                    {
+                        title: "Cybersécurité",
+                        description: "Protection des systèmes informatiques contre les cybermenaces.",
+                        etablissements: "INPT, ENSIAS, UM6P, UEMF, 1337, ESI"
+                    },
+                    {
+                        title: "Réseaux et Télécommunications",
+                        description: "Infrastructures réseaux, cloud computing et IoT.",
+                        etablissements: "INPT, ENSIAS, ENSA, UEMF, UM6P, SUPMTI"
+                    },
+                    {
+                        title: "Médecine Générale",
+                        description: "Études médicales pour devenir docteur en médecine.",
+                        etablissements: "FMPR, FMPC, FMPM, FMPF, FMPO, UPM"
+                    },
+                    {
+                        title: "Pharmacie",
+                        description: "Étude et fabrication des médicaments.",
+                        etablissements: "FMPR, FMPC, UPM"
+                    },
+                    {
+                        title: "Dentisterie",
+                        description: "Soins dentaires et chirurgie buccale.",
+                        etablissements: "FMD Rabat, FMD Casablanca, UPM"
+                    },
+                    {
+                        title: "Finance et Banque",
+                        description: "Gestion financière, investissement et services bancaires.",
+                        etablissements: "ENCG, HEM, ISCAE, UIR, UEMF, HEEC, ESCA"
+                    },
+                    {
+                        title: "Marketing Digital",
+                        description: "Stratégies digitales et communication en ligne.",
+                        etablissements: "ENCG, ISCAE, UIR, UEMF, HEM, ESCA"
+                    },
+                    {
+                        title: "Management et Gestion d'Entreprise",
+                        description: "Gestion, entrepreneuriat et stratégie d'affaires.",
+                        etablissements: "ENCG, HEM, ISCAE, UIR, UEMF, ESCA, HEEC"
+                    },
+                    {
+                        title: "Droit et Sciences Juridiques",
+                        description: "Droit privé, droit des affaires et droit public.",
+                        etablissements: "FSJES Rabat, FSJES Casablanca, FSJES Marrakech, UEMF, UIR"
+                    },
+                    {
+                        title: "Architecture",
+                        description: "Conception de bâtiments et urbanisme.",
+                        etablissements: "ENA Rabat, ENA Fès, ENA Marrakech, UEMF, UIR"
+                    },
+                    {
+                        title: "Design Graphique et Multimédia",
+                        description: "Création visuelle et animation numérique.",
+                        etablissements: "ESAV Marrakech, UIR, UEMF, SUPINFO, ISGA"
+                    },
+                    {
+                        title: "Environnement et Développement Durable",
+                        description: "Gestion écologique et stratégies de durabilité.",
+                        etablissements: "FST, UM6P, UEMF, EHTP, ESTP"
+                    }
+                ];;
+
                 setRecommendations(data);
             };
 
             return (
                 <div className="max-w-lg mx-auto bg-white p-6 shadow-md rounded">
                     <h1 className="text-2xl font-bold mb-4">Orientation Étudiante</h1>
-                    <input 
-                        type="text" placeholder="Vos centres d’intérêt" 
-                        className="w-full p-2 border mb-2" 
-                        value={interests} onChange={(e) => setInterests(e.target.value)}
+
+                    <input
+                        type="text" placeholder="Votre niveau scolaire"
+                        className="w-full p-2 border mb-2"
+                        value={schoolLevel} onChange={(e) => setSchoolLevel(e.target.value)}
                     />
-                    <input 
-                        type="text" placeholder="Vos compétences" 
-                        className="w-full p-2 border mb-4" 
+
+                    <input
+                        type="text" placeholder="Vos matières préférées"
+                        className="w-full p-2 border mb-2"
+                        value={favoriteSubjects} onChange={(e) => setFavoriteSubjects(e.target.value)}
+                    />
+
+                    <input
+                        type="text" placeholder="Vos résultats scolaires"
+                        className="w-full p-2 border mb-2"
+                        value={results} onChange={(e) => setResults(e.target.value)}
+                    />
+
+                    <input
+                        type="text" placeholder="Vos compétences (langues, technologies, activités extrascolaires)"
+                        className="w-full p-2 border mb-2"
                         value={skills} onChange={(e) => setSkills(e.target.value)}
                     />
+
+                    <input
+                        type="text" placeholder="Vos centres d’intérêt (sciences, art, entrepreneuriat, etc.)"
+                        className="w-full p-2 border mb-4"
+                        value={interests} onChange={(e) => setInterests(e.target.value)}
+                    />
+
                     <button className="bg-blue-500 text-white p-2 w-full rounded" onClick={handleGenerateRecommendations}>
                         Obtenir des recommandations
                     </button>
@@ -55,6 +175,7 @@
                             <div key={index} className="p-4 border mb-2">
                                 <h2 className="text-lg font-semibold">{rec.title}</h2>
                                 <p>{rec.description}</p>
+                                <p>{rec.etablissements}</p>
                             </div>
                         ))}
                     </div>
@@ -66,4 +187,5 @@
     </script>
 
 </body>
+
 </html>
