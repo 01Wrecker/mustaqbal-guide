@@ -10,13 +10,127 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        input {
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            transition: background 0.3s;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .recommendation {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            background: #f9f9f9;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+            background: rgba(255, 255, 255, 0.8);
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 p-6">
-
-    <div id="root"></div>
-
+<body>
+    <div id="root" class="container"></div>
     <script type="text/babel">
+        const data = [
+            { title: "Informatique", description: "Études en développement, cybersécurité, IA", etablissements: "ENSIAS, INPT, UM6P, ISCAE", keywords: ["informatique", "programmation", "cybersécurité", "IA"] },
+            { title: "Médecine", description: "Études en médecine générale et spécialisation", etablissements: "FMPC, UM6SS, Faculté de Médecine de Casablanca", keywords: ["médecine", "chirurgie", "santé"] },
+            { title: "Ingénierie", description: "Études en génie civil, mécanique, électrique, aéronautique", etablissements: "EMI, ENSA, EHTP, Université Al Akhawayn", keywords: ["ingénierie", "mécanique", "civil", "électrique", "aéronautique"] },
+            { title: "Droit", description: "Études en droit privé, public, international", etablissements: "Université Mohammed V, Université Hassan II, Faculté de Droit de Rabat", keywords: ["droit", "juridique", "légal"] },
+            { title: "Commerce", description: "Études en gestion, marketing, finance", etablissements: "HEM, ESSEC, ISCAE, Université Al Akhawayn", keywords: ["commerce", "gestion", "marketing", "finance"] },
+            { title: "Architecture", description: "Études en architecture et urbanisme", etablissements: "Institut National d’Architecture, ENSA Casablanca, Université de Marrakech", keywords: ["architecture", "urbanisme"] },
+            { title: "Pharmacie", description: "Études en pharmacie et biopharmacie", etablissements: "Faculté de Médecine de Casablanca, Université Cadi Ayyad", keywords: ["pharmacie", "biopharmacie"] },
+            { title: "Psychologie", description: "Études en psychologie clinique, sociale, cognitive", etablissements: "Université Hassan II, Université Mohammed V, Université Ibn Tofail", keywords: ["psychologie", "clinique", "sociale", "cognitive"] },
+            { title: "Agronomie", description: "Études en agriculture, gestion des ressources naturelles", etablissements: "INRA, Institut Agronomique et Vétérinaire Hassan II, Université Ibn Zohr", keywords: ["agronomie", "agriculture", "environnement"] },
+            { title: "Art et Design", description: "Études en arts plastiques, design graphique et design industriel", etablissements: "École supérieure des beaux-arts, ENSA Marrakech, Université de Fès", keywords: ["art", "design", "graphique", "plastique"] },
+            { title: "Tourisme", description: "Études en gestion du tourisme et hôtellerie", etablissements: "Université Hassan II, ISCAE, Université de Marrakech", keywords: ["tourisme", "hôtellerie", "gestion"] },
+            { title: "Sciences sociales", description: "Études en sociologie, anthropologie, sciences politiques", etablissements: "Université Hassan II, Université Mohammed V", keywords: ["sociologie", "anthropologie", "sciences politiques"] },
+            { title: "Éducation", description: "Études en enseignement primaire, secondaire, et supérieur", etablissements: "ENS, Faculté des Lettres de Rabat", keywords: ["éducation", "enseignement", "pédagogie"] },
+            { title: "Journalisme", description: "Études en communication, journalisme, et médias", etablissements: "Université Mohammed V, ESJ, ISIC", keywords: ["journalisme", "communication", "médias"] },
+            { title: "Sciences politiques", description: "Études en relations internationales, administration publique", etablissements: "Université Mohammed V, ISIC", keywords: ["sciences politiques", "relations internationales", "administration publique"] },
+            { title: "Biotechnologie", description: "Études en biotechnologie, bio-ingénierie, et biologie moléculaire", etablissements: "Université Cadi Ayyad, Université Mohammed V, Université Hassan II", keywords: ["biotechnologie", "bio-ingénierie", "biologie"] },
+            { title: "Énergie", description: "Études en énergies renouvelables, thermique et énergétique", etablissements: "Université Mohammed VI Polytechnique, ENSA, Université de Fès", keywords: ["énergie", "renouvelable", "thermique"] },
+            { title: "Logistique", description: "Études en gestion de la chaîne d'approvisionnement et logistique", etablissements: "Université Hassan II, ISCAE, Université Al Akhawayn", keywords: ["logistique", "chaîne d'approvisionnement", "gestion"] },
+            { title: "Génie Informatique", description: "Études en génie logiciel, systèmes informatiques", etablissements: "ENSA, ISI, UCA", keywords: ["génie", "informatique", "logiciel", "systèmes"] },
+            { title: "Mathématiques", description: "Études en mathématiques pures et appliquées", etablissements: "Université Mohammed V, Université Hassan II", keywords: ["mathématiques", "analyse", "algèbre"] },
+            { title: "Écologie", description: "Études sur les écosystèmes, biodiversité et conservation", etablissements: "Université Ibn Zohr, Université Hassan II", keywords: ["écologie", "environnement", "biodiversité"] },
+            { title: "Chimie", description: "Études en chimie organique, inorganique et analytique", etablissements: "Université Cadi Ayyad, Université Mohammed V", keywords: ["chimie", "organique", "inorganique", "analytique"] },
+            { title: "Physique", description: "Études en physique théorique et appliquée", etablissements: "Université Hassan II, Université Mohammed V", keywords: ["physique", "quantique", "théorique"] },
+            { title: "Astronomie", description: "Études sur l'astronomie et les sciences spatiales", etablissements: "Université Mohammed VI Polytechnique", keywords: ["astronomie", "spatial", "cosmologie"] },
+            { title: "Finance", description: "Études en finance d'entreprise, marchés financiers", etablissements: "ISCAE, HEM, Université Hassan II", keywords: ["finance", "gestion", "marchés financiers"] },
+            { title: "Gestion des Ressources Humaines", description: "Études sur la gestion des talents, recrutement et développement", etablissements: "Université Mohammed V, ISCAE", keywords: ["gestion", "ressources humaines", "recrutement"] },
+            { title: "Agriculture Durable", description: "Études sur les techniques agricoles respectueuses de l'environnement", etablissements: "Université Cadi Ayyad, INRA", keywords: ["agriculture", "durable", "environnement"] },
+            { title: "Technologie de l'information", description: "Études sur les systèmes d'information, bases de données et cloud", etablissements: "ENSIAS, INPT", keywords: ["technologie", "systèmes d'information", "cloud", "bases de données"] },
+            { title: "Design Industriel", description: "Études en design industriel, ergonomie et innovation produit", etablissements: "ENSA Casablanca, Université de Fès", keywords: ["design", "industriel", "ergonomie"] },
+            { title: "Génie Civil", description: "Études en génie civil, construction et infrastructures", etablissements: "EMI, ENSA", keywords: ["génie civil", "construction", "infrastructure"] },
+            { title: "Génie Mécanique", description: "Études en conception de machines, thermodynamique et matériaux", etablissements: "EMI, ENSA", keywords: ["génie", "mécanique", "machines"] },
+            { title: "Génie Électrique", description: "Études sur les systèmes électriques et l'électronique", etablissements: "EMI, ENSA", keywords: ["génie", "électrique", "électronique"] },
+            { title: "Génie Aéronautique", description: "Études en ingénierie aéronautique, aéronefs et systèmes", etablissements: "Université Mohammed VI Polytechnique", keywords: ["génie", "aéronautique", "aéronefs"] },
+            { title: "Génie Chimique", description: "Études sur les processus industriels et la chimie appliquée", etablissements: "Université Hassan II", keywords: ["génie", "chimique", "industriel"] },
+            { title: "Télécommunications", description: "Études en réseaux, systèmes de communication et technologies mobiles", etablissements: "INPT, ENSIAS", keywords: ["télécommunications", "réseaux", "mobiles"] },
+            { title: "Relations Internationales", description: "Études sur la diplomatie, les organisations internationales et le droit international", etablissements: "Université Mohammed V, ISIC", keywords: ["relations internationales", "diplomatie", "droit international"] },
+            { title: "Logistique Internationale", description: "Études sur le transport et la gestion des chaînes logistiques mondiales", etablissements: "Université Al Akhawayn", keywords: ["logistique", "transport", "gestion"] },
+            { title: "Météorologie", description: "Études sur les phénomènes atmosphériques et climatiques", etablissements: "Université Cadi Ayyad", keywords: ["météorologie", "climatologie"] },
+            { title: "Cinéma et Audiovisuel", description: "Études en production cinématographique, réalisation et écriture de scénarios", etablissements: "ISIC, Université de Fès", keywords: ["cinéma", "audiovisuel", "scénarios"] },
+            { title: "Musique", description: "Études sur la composition musicale, production et performance", etablissements: "École supérieure de musique de Rabat", keywords: ["musique", "composition", "performance"] },
+            { title: "Histoire", description: "Études sur les civilisations anciennes, histoire contemporaine et archéologie", etablissements: "Université Hassan II", keywords: ["histoire", "archéologie", "civilisations"] },
+            { title: "Lettres Modernes", description: "Études littéraires et linguistiques des langues modernes", etablissements: "Université Mohammed V", keywords: ["lettres modernes", "linguistique", "littérature"] },
+            { title: "Sociologie", description: "Études sur la société, les comportements sociaux et la culture", etablissements: "Université Mohammed V, Université Hassan II", keywords: ["sociologie", "comportement", "culture"] },
+            { title: "Philosophie", description: "Études sur les écoles de pensée et la réflexion critique", etablissements: "Université Mohammed V", keywords: ["philosophie", "réflexion", "pensée"] },
+            { title: "Mathématiques Appliquées", description: "Études des applications des mathématiques dans les domaines réels", etablissements: "Université Hassan II, Université Mohammed V", keywords: ["mathématiques", "appliquées", "statistiques"] },
+            { title: "Géologie", description: "Études sur la structure de la Terre et ses matériaux", etablissements: "Université Mohammed V", keywords: ["géologie", "minéraux", "géophysique"] },
+            { title: "Éducation Physique", description: "Études sur l'éducation sportive et la préparation physique", etablissements: "Université Hassan II", keywords: ["éducation physique", "sport", "préparation"] },
+            { title: "Anthropologie", description: "Études sur les cultures humaines, l'évolution et la diversité", etablissements: "Université Hassan II", keywords: ["anthropologie", "évolution", "culture"] },
+            { title: "Sciences de la Terre", description: "Études sur la géophysique, la géologie et l'environnement", etablissements: "Université Mohammed V", keywords: ["sciences de la terre", "géophysique", "environnement"] },
+            { title: "Archéologie", description: "Études sur l'étude des vestiges anciens et leur analyse", etablissements: "Université Cadi Ayyad", keywords: ["archéologie", "vestiges", "historique"] }
+        ];
+
+
         function StudentOrientationApp() {
             const [schoolLevel, setSchoolLevel] = React.useState("");
             const [favoriteSubjects, setFavoriteSubjects] = React.useState("");
@@ -26,165 +140,56 @@
             const [recommendations, setRecommendations] = React.useState([]);
 
             const handleGenerateRecommendations = () => {
-                // Simulating recommendations based on the inputs
-                const data = [
-                    {
-                        title: "Génie Informatique",
-                        description: "Formation axée sur le développement logiciel, la gestion des systèmes et la cybersécurité.",
-                        etablissements: "EMI, ENSIAS, INPT, ENSA, FST, UIR, UM6P, UEMF, SUPINFO, 1337, ESI"
-                    },
-                    {
-                        title: "Génie Civil",
-                        description: "Conception, construction et maintenance des infrastructures et bâtiments.",
-                        etablissements: "EMI, ENSA, ENSAM, FST, UEMF, UM6P, ESGB, EHTP"
-                    },
-                    {
-                        title: "Génie Mécanique",
-                        description: "Conception et fabrication de systèmes mécaniques et industriels.",
-                        etablissements: "EMI, ENSAM, ENSA, FST, UEMF, UM6P, EHTP"
-                    },
-                    {
-                        title: "Génie Électrique et Énergies Renouvelables",
-                        description: "Électricité, électronique et énergies durables.",
-                        etablissements: "EMI, ENSA, ENSAM, FST, INPT, UEMF, UM6P, EHTP, ESTP"
-                    },
-                    {
-                        title: "Génie Industriel",
-                        description: "Optimisation des processus et gestion des systèmes industriels.",
-                        etablissements: "EMI, ENSA, ENSAM, ENSMR, UM6P, UEMF, ESITH, ESTP"
-                    },
-                    {
-                        title: "Génie Biomédical",
-                        description: "Application des technologies à la santé et aux dispositifs médicaux.",
-                        etablissements: "EMI, ENSA, FST, UEMF, EST Casablanca, ESGB"
-                    },
-                    {
-                        title: "Intelligence Artificielle et Data Science",
-                        description: "Apprentissage automatique, analyse des données et solutions IA.",
-                        etablissements: "ENSIAS, INPT, UM6P, UEMF, UIR, SUPINFO, 1337, ESI"
-                    },
-                    {
-                        title: "Développement Web et Mobile",
-                        description: "Création et maintenance de sites et applications mobiles.",
-                        etablissements: "ENSIAS, INPT, ENSA, FST, UEMF, 1337, SUPINFO, ESI, ISGA"
-                    },
-                    {
-                        title: "Cybersécurité",
-                        description: "Protection des systèmes informatiques contre les cybermenaces.",
-                        etablissements: "INPT, ENSIAS, UM6P, UEMF, 1337, ESI"
-                    },
-                    {
-                        title: "Réseaux et Télécommunications",
-                        description: "Infrastructures réseaux, cloud computing et IoT.",
-                        etablissements: "INPT, ENSIAS, ENSA, UEMF, UM6P, SUPMTI"
-                    },
-                    {
-                        title: "Médecine Générale",
-                        description: "Études médicales pour devenir docteur en médecine.",
-                        etablissements: "FMPR, FMPC, FMPM, FMPF, FMPO, UPM"
-                    },
-                    {
-                        title: "Pharmacie",
-                        description: "Étude et fabrication des médicaments.",
-                        etablissements: "FMPR, FMPC, UPM"
-                    },
-                    {
-                        title: "Dentisterie",
-                        description: "Soins dentaires et chirurgie buccale.",
-                        etablissements: "FMD Rabat, FMD Casablanca, UPM"
-                    },
-                    {
-                        title: "Finance et Banque",
-                        description: "Gestion financière, investissement et services bancaires.",
-                        etablissements: "ENCG, HEM, ISCAE, UIR, UEMF, HEEC, ESCA"
-                    },
-                    {
-                        title: "Marketing Digital",
-                        description: "Stratégies digitales et communication en ligne.",
-                        etablissements: "ENCG, ISCAE, UIR, UEMF, HEM, ESCA"
-                    },
-                    {
-                        title: "Management et Gestion d'Entreprise",
-                        description: "Gestion, entrepreneuriat et stratégie d'affaires.",
-                        etablissements: "ENCG, HEM, ISCAE, UIR, UEMF, ESCA, HEEC"
-                    },
-                    {
-                        title: "Droit et Sciences Juridiques",
-                        description: "Droit privé, droit des affaires et droit public.",
-                        etablissements: "FSJES Rabat, FSJES Casablanca, FSJES Marrakech, UEMF, UIR"
-                    },
-                    {
-                        title: "Architecture",
-                        description: "Conception de bâtiments et urbanisme.",
-                        etablissements: "ENA Rabat, ENA Fès, ENA Marrakech, UEMF, UIR"
-                    },
-                    {
-                        title: "Design Graphique et Multimédia",
-                        description: "Création visuelle et animation numérique.",
-                        etablissements: "ESAV Marrakech, UIR, UEMF, SUPINFO, ISGA"
-                    },
-                    {
-                        title: "Environnement et Développement Durable",
-                        description: "Gestion écologique et stratégies de durabilité.",
-                        etablissements: "FST, UM6P, UEMF, EHTP, ESTP"
-                    }
-                ];;
+                const interestKeywords = interests.toLowerCase().split(/,|\s+/).map(i => i.trim());
+                const filteredRecommendations = data.filter(rec => rec.keywords.some(keyword => interestKeywords.includes(keyword)));
+                setRecommendations(filteredRecommendations);
+            };
 
-                setRecommendations(data);
+            // Open a search link for each recommendation
+            const handleSearch = (title) => {
+                const query = encodeURIComponent(title);
+                const searchUrl = `https://www.google.com/search?q=${query}`;
+                window.open(searchUrl, "_blank");
             };
 
             return (
-                <div className="max-w-lg mx-auto bg-white p-6 shadow-md rounded">
-                    <h1 className="text-2xl font-bold mb-4">Orientation Étudiante</h1>
-
-                    <input
-                        type="text" placeholder="Votre niveau scolaire"
-                        className="w-full p-2 border mb-2"
-                        value={schoolLevel} onChange={(e) => setSchoolLevel(e.target.value)}
-                    />
-
-                    <input
-                        type="text" placeholder="Vos matières préférées"
-                        className="w-full p-2 border mb-2"
-                        value={favoriteSubjects} onChange={(e) => setFavoriteSubjects(e.target.value)}
-                    />
-
-                    <input
-                        type="text" placeholder="Vos résultats scolaires"
-                        className="w-full p-2 border mb-2"
-                        value={results} onChange={(e) => setResults(e.target.value)}
-                    />
-
-                    <input
-                        type="text" placeholder="Vos compétences (langues, technologies, activités extrascolaires)"
-                        className="w-full p-2 border mb-2"
-                        value={skills} onChange={(e) => setSkills(e.target.value)}
-                    />
-
-                    <input
-                        type="text" placeholder="Vos centres d’intérêt (sciences, art, entrepreneuriat, etc.)"
-                        className="w-full p-2 border mb-4"
-                        value={interests} onChange={(e) => setInterests(e.target.value)}
-                    />
-
-                    <button className="bg-blue-500 text-white p-2 w-full rounded" onClick={handleGenerateRecommendations}>
-                        Obtenir des recommandations
-                    </button>
+                <div>
+                    <h1 className="text-2xl font-bold mb-4 text-center">Orientation Étudiante</h1>
+                    <input type="text" placeholder="Votre niveau scolaire" value={schoolLevel} onChange={(e) => setSchoolLevel(e.target.value)} />
+                    <input type="text" placeholder="Vos matières préférées" value={favoriteSubjects} onChange={(e) => setFavoriteSubjects(e.target.value)} />
+                    <input type="text" placeholder="Vos résultats scolaires" value={results} onChange={(e) => setResults(e.target.value)} />
+                    <input type="text" placeholder="Vos compétences" value={skills} onChange={(e) => setSkills(e.target.value)} />
+                    <input type="text" placeholder="Vos centres d’intérêt (ex: informatique, médecine)" value={interests} onChange={(e) => setInterests(e.target.value)} />
+                    <button onClick={handleGenerateRecommendations}>Obtenir des recommandations</button>
                     <div className="mt-6">
-                        {recommendations.map((rec, index) => (
-                            <div key={index} className="p-4 border mb-2">
-                                <h2 className="text-lg font-semibold">{rec.title}</h2>
-                                <p>{rec.description}</p>
-                                <p>{rec.etablissements}</p>
-                            </div>
-                        ))}
+                        {recommendations.length > 0 ? (
+                            recommendations.map((rec, index) => (
+                                <div key={index} className="recommendation">
+                                    <h2 className="text-lg font-semibold">{rec.title}</h2>
+                                    <p>{rec.description}</p>
+                                    <p><strong>Établissements:</strong> {rec.etablissements}</p>
+                                    <button
+                                        className="bg-blue-500 text-white py-2 px-4 mt-2 rounded"
+                                        onClick={() => handleSearch(rec.title)}
+                                    >
+                                        Chercher plus d'infos
+                                    </button>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-gray-500 text-center">Aucune recommandation trouvée pour ces centres d’intérêt.</p>
+                        )}
                     </div>
                 </div>
             );
         }
-
         ReactDOM.createRoot(document.getElementById('root')).render(<StudentOrientationApp />);
     </script>
+ <div class="footer">
+    <p>📩 <strong>Contactez-nous :</strong> <a href="mailto:marouaamine2004@gmail.com">marouaamine2004@gmail.com</a></p>
+    <p>💡 <strong>Ce site</strong> est un projet éducatif visant à aider les étudiants dans leur orientation scolaire. N'hésitez pas à nous contacter pour toute question ou suggestion.</p>
+    <p>© 2025 Tous droits réservés.</p>
+</div>
 
 </body>
 
